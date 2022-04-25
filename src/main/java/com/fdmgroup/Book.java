@@ -1,4 +1,4 @@
-package main.java.com.fdmgroup;
+package com.fdmgroup;
 
 public class Book {
     private final int BOOKID;

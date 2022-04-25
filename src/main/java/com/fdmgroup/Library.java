@@ -1,4 +1,4 @@
-package main.java.com.fdmgroup;
+package com.fdmgroup;
 
 import java.util.ArrayList;
 

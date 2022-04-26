@@ -2,32 +2,54 @@ package com.fdmgroup;
 
 public class Book {
     private final int BOOKID;
-    private String title;
-    private String author;
+    private String bookName;
+    private int ISBN;
+    private String bookPublisherName;
+    
+	public Book(int bOOKID, String bookName, int iSBN, String bookPublisherName) {
+		super();
+		BOOKID = bOOKID;
+		this.bookName = bookName;
+		ISBN = iSBN;
+		this.bookPublisherName = bookPublisherName;
+	}
 
-    public Book(int bOOKID, String title, String author) {
-        BOOKID = bOOKID;
-        this.title = title;
-        this.author = author;
-    }
+	public String getBookName() {
+		return bookName;
+	}
 
-    public int getBOOKID() {
-        return BOOKID;
-    }
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public int getISBN() {
+		return ISBN;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setISBN(int iSBN) {
+		ISBN = iSBN;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public String getBookPublisherName() {
+		return bookPublisherName;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public void setBookPublisherName(String bookPublisherName) {
+		this.bookPublisherName = bookPublisherName;
+	}
+
+	public int getBOOKID() {
+		return BOOKID;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [BOOKID=" + BOOKID + ", bookName=" + bookName + ", ISBN=" + ISBN + ", bookPublisherName="
+				+ bookPublisherName + "]";
+	}
+    
+    
+    
+    
+    
 }

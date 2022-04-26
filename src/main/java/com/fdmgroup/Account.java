@@ -32,6 +32,6 @@ public class Account {
         return "Account [accountNumber=" + accountNumber + ", openedDate=" + openedDate + "]";
     }
 
-    
+
     
 }

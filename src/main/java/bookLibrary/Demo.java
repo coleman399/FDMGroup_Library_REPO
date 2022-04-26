@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 public class Demo {
 
   static EntityManagerFactory emf;
-  
+
   public static List<String> getAuthorName() {
     EntityManager em = emf.createEntityManager();
 
@@ -24,7 +24,7 @@ public class Demo {
 
   public static void main(String[] args) {
     Author rowling = new Author("J.K. Rowling");
-    Author herbert  = new Author("Frank Herbert");
+    Author herbert = new Author("Frank Herbert");
     emf = Persistence.createEntityManagerFactory("JPA");
     EntityManager em = emf.createEntityManager();
     EntityTransaction t = em.getTransaction();

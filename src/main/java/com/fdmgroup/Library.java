@@ -1,33 +1,35 @@
 package com.fdmgroup;
 
-import java.util.ArrayList;
-
 public class Library {
-	private ArrayList<Book> books;
 
-	public Library(ArrayList<Book> books) {
-		this.books = books;
+	private String libraryName;
+	private String libraryAddress;
+
+	public Library(String libraryName, String libraryAddress) {
+		super();
+		this.libraryName = libraryName;
+		this.libraryAddress = libraryAddress;
 	}
 
-	public ArrayList<Book> getBooks() {
-		return books;
+	public String getLibraryName() {
+		return libraryName;
 	}
 
-	public void setBooks(ArrayList<Book> books) {
-		this.books = books;
+	public void setLibraryName(String libraryName) {
+		this.libraryName = libraryName;
 	}
 
-	public void returnBook(ArrayList<Book> books) {
-
+	public String getLibraryAddress() {
+		return libraryAddress;
 	}
 
-	public void borrowBook(Book book) {
-
+	public void setLibraryAddress(String libraryAddress) {
+		this.libraryAddress = libraryAddress;
 	}
 
-	public boolean searchBook(String bookName) {
-
-		return true;
+	@Override
+	public String toString() {
+		return "Library [libraryName=" + libraryName + ", libraryAddress=" + libraryAddress + "]";
 	}
 
 	// don't know if we need

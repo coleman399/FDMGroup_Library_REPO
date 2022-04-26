@@ -1,11 +1,11 @@
 package com.fdmgroup;
 
-public class Book {
-    private final int BOOKID;
-    private String bookName;
-    private int ISBN;
-    private String bookPublisherName;
-    
+public abstract class Book {
+	private final int BOOKID;
+	private String bookName;
+	private int ISBN;
+	private String bookPublisherName;
+
 	public Book(int bOOKID, String bookName, int iSBN, String bookPublisherName) {
 		super();
 		BOOKID = bOOKID;
@@ -47,9 +47,5 @@ public class Book {
 		return "Book [BOOKID=" + BOOKID + ", bookName=" + bookName + ", ISBN=" + ISBN + ", bookPublisherName="
 				+ bookPublisherName + "]";
 	}
-    
-    
-    
-    
-    
+
 }

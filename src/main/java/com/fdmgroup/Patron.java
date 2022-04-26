@@ -1,27 +1,34 @@
 package com.fdmgroup;
 
-import java.util.ArrayList;
+public class Patron implements Search {
 
-public class Patron extends Library {
+private String patronName;
+private String patronAddress;
 
-	public Patron(ArrayList<Book> books) {
-		super(books);
-	}
+public Patron(String patronName, String patronAddress) {
+  this.patronName = patronName;
+  this.patronAddress = patronAddress;
+}
 
-	@Override
-	public boolean searchBook(String bookName) {
+public String getPatronName() {
+  return patronName;
+}
 
-		return true;
-	}
+public void setPatronName(String patronName) {
+  this.patronName = patronName;
+}
 
-	@Override
-	public void borrowBook(Book book) {
+public String getPatronAddress() {
+  return patronAddress;
+}
 
-	}
+public void setPatronAddress(String patronAddress) {
+  this.patronAddress = patronAddress;
+}
 
-	@Override
-	public void returnBook(ArrayList<Book> books) {
-
-	}
+@Override
+public String toString() {
+    return "Patron [patronAddress=" + patronAddress + ", patronName=" + patronName + "]";
+}
 
 }

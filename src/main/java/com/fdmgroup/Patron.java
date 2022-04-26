@@ -2,33 +2,39 @@ package com.fdmgroup;
 
 public class Patron implements Search {
 
-private String patronName;
-private String patronAddress;
+    private String patronName;
+    private String patronAddress;
 
-public Patron(String patronName, String patronAddress) {
-  this.patronName = patronName;
-  this.patronAddress = patronAddress;
-}
+    public Patron(String patronName, String patronAddress) {
+        this.patronName = patronName;
+        this.patronAddress = patronAddress;
+    }
 
-public String getPatronName() {
-  return patronName;
-}
+    public String getPatronName() {
+        return patronName;
+    }
 
-public void setPatronName(String patronName) {
-  this.patronName = patronName;
-}
+    public void setPatronName(String patronName) {
+        this.patronName = patronName;
+    }
 
-public String getPatronAddress() {
-  return patronAddress;
-}
+    public String getPatronAddress() {
+        return patronAddress;
+    }
 
-public void setPatronAddress(String patronAddress) {
-  this.patronAddress = patronAddress;
-}
+    public void setPatronAddress(String patronAddress) {
+        this.patronAddress = patronAddress;
+    }
 
-@Override
-public String toString() {
-    return "Patron [patronAddress=" + patronAddress + ", patronName=" + patronName + "]";
-}
+    @Override
+    public String toString() {
+        return "Patron [patronAddress=" + patronAddress + ", patronName=" + patronName + "]";
+    }
+
+    @Override
+    public void searchLibrary() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

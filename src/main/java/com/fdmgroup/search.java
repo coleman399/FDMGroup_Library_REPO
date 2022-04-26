@@ -1,6 +1,6 @@
 package com.fdmgroup;
 
-public interface search {
+public interface Search {
 	public void searchLibrary();
 
 }

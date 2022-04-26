@@ -1,6 +1,6 @@
 package com.fdmgroup;
 
-public interface manage {
+public interface Manage {
 	public void manageLibrary();
 
 }

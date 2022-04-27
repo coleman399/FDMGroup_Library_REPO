@@ -20,6 +20,15 @@ public class Demo {
     return results;
   }
 
+  public static List<Author> getNameFromID(String id) {
+    EntityManager em = emf.createEntityManager();    
+    final TypedQuery<Author> query = em.createNamedQuery("findByID", Author.class);
+    query.setParameter("id", id);
+    final List<Author> results = query.getResultList();
+    em.close();
+    return results;
+  }
+
   public static void main(String[] args) {
     Author rowling = new Author("J.K. Rowling");
     Author herbert = new Author("Frank Herbert");
@@ -34,6 +43,11 @@ public class Demo {
     System.out.println("--Get Name Test---");
 
     System.out.println(getAuthorName("Frank Herbert"));
+
+    System.out.println("---Get By ID Test---");
+
+    System.out.println(getNameFromID("1"));
+
     emf.close();
   }
 

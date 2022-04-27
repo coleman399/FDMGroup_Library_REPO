@@ -9,6 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQuery(name = "findByAuthor", query = "SELECT a FROM Author a WHERE a.authorName = :name")
+@NamedQuery(name = "findByID", query = "SELECT a FROM Author a WHERE a.id = :id")
 
 @Entity
 @Table(name="Author")

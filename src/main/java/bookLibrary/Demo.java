@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 public class Demo {
 
   static EntityManagerFactory emf;
+
   
   public static List<Author> getAuthorName(String name) {
     EntityManager em = emf.createEntityManager();    

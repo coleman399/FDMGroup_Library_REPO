@@ -32,7 +32,6 @@ public class Demo {
 		em.close();
 		return results;
 	}
-
 	public static void main(String[] args) throws ParseException {
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");

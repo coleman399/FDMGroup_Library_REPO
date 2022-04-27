@@ -26,7 +26,7 @@ public class Author {
 	private String authorName;
 
 	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-	private List<Book> books = new ArrayList<>();
+	private List<BookItem> books = new ArrayList<>();
 
 	public Author(final String authorName) {
 		this.authorName = authorName;
@@ -46,6 +46,14 @@ public class Author {
 	@Override
 	public String toString() {
 		return "Author [authorName=" + authorName + ", id=" + id + "]";
+	}
+
+    public void addBookItem(BookItem bookItem) {
+		books.add(bookItem);
+    }
+
+	public List<BookItem> getBooks() {
+		return books;
 	}
 
 }

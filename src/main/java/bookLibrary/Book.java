@@ -3,14 +3,15 @@ package bookLibrary;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Book")
 public abstract class Book {
 
@@ -30,15 +31,12 @@ public abstract class Book {
 	private Author author;
 
 	public Book() {
-		super();
+
 	}
 
-	public Book(int bOOKID, String bookName, int iSBN, Date borrowedDate) {
-		super();
-		BOOKID = bOOKID;
+	public Book(String bookName, int iSBN, Date borrowedDate) {
 		this.bookName = bookName;
 		ISBN = iSBN;
-
 		this.borrowedDate = borrowedDate;
 	}
 
@@ -56,6 +54,14 @@ public abstract class Book {
 
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
 	public int getISBN() {

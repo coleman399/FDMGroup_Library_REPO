@@ -1,5 +1,8 @@
 package bookLibrary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -30,7 +33,7 @@ public class Demo {
 		return results;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
 		emf = Persistence.createEntityManagerFactory("JPA");
@@ -41,10 +44,32 @@ public class Demo {
 		em.getTransaction().commit();
 		em.close();
 		System.out.println(getAuthorName("Frank Herbert"));
+
+		String sDate1 = "31/12/1998";
+		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+
+		BookItem bookItem1 = new BookItem("blah blah blah", 1234, date1);
+		BookItem bookItem2 = new BookItem("blah blah blah", 1234, date1);
+
+		em.getTransaction().begin();
+		rowling.addBookItem(bookItem1);
+		rowling.addBookItem(bookItem2);
+		rowling = em.merge(rowling);
+		bookItem1 = rowling.getBooks().get(0);
+		bookItem1.setAuthor(rowling);
+		bookItem2 = rowling.getBooks().get(1);
+		bookItem2.setAuthor(rowling);
+
+		em.getTransaction().commit();
+
+		em.close();
+
+		em = emf.createEntityManager();
+
+		final List<Book> results = findAllBooksForAuthor(rowling);
+		System.out.println(results);
+
 		emf.close();
-
-		BookItem bookItem = new BookItem();
-
 	}
 
 }

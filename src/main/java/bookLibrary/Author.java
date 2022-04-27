@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@NamedQuery(name = "findByAuthor", query = "SELECT a.authorName, a.id FROM Author a WHERE a.authorName = :name")
+@NamedQuery(name = "findByAuthor", query = "SELECT a FROM Author a WHERE a.authorName = :name")
 
 @Entity
 @Table(name="Author")
@@ -37,8 +37,10 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author [authorName=" + authorName + "]";
+      return "Author [authorName=" + authorName + ", id=" + id + "]";
     }
+
+    
 
     
     

@@ -3,3 +3,4 @@
 org.eclipse.core.resources.prefs
 persistence.xml
 settings.json
+*.class

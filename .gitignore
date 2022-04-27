@@ -6,3 +6,4 @@ settings.json
 /target/classes/classes/bookLibrary/*.class
 *.class
 .vscode
+pom.xml

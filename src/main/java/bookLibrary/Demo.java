@@ -14,7 +14,6 @@ public class Demo {
 
   public static List<String> getAuthorName() {
     EntityManager em = emf.createEntityManager();
-
     final String jpql = "SELECT a.authorName FROM Author a";
     final TypedQuery<String> query = em.createQuery(jpql, String.class);
     final List<String> results = query.getResultList();

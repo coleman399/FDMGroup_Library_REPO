@@ -32,6 +32,7 @@ public class Demo {
 		em.close();
 		return results;
 	}
+
 	public static void main(String[] args) throws ParseException {
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
@@ -64,10 +65,6 @@ public class Demo {
 		em.getTransaction().commit();
 
 		em.close();
-
-		em = emf.createEntityManager();
-		
-		System.out.println("--HERE---"); //debug
 
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);

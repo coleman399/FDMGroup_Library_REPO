@@ -20,6 +20,16 @@ public class Demo {
 		return results;
 	}
 
+	public static List<Book> findAllBooksForAuthor(Author author) {
+		final EntityManager em = emf.createEntityManager();
+		final String jpql = "SELECT b FROM Book b WHERE b.authorName = :author";
+		final TypedQuery<Book> query = em.createQuery(jpql, Book.class);
+		query.setParameter("author", author);
+		final List<Book> results = query.getResultList();
+		em.close();
+		return results;
+	}
+
 	public static void main(String[] args) {
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
@@ -32,6 +42,9 @@ public class Demo {
 		em.close();
 		System.out.println(getAuthorName("Frank Herbert"));
 		emf.close();
+
+		BookItem bookItem = new BookItem();
+
 	}
 
 }

@@ -1,2 +1,9 @@
 /target/
 .classpath
+org.eclipse.core.resources.prefs
+persistence.xml
+settings.json
+/target/classes/classes/bookLibrary/*.class
+*.class
+.vscode
+pom.xml

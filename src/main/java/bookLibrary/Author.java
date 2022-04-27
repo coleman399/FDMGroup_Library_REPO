@@ -5,14 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+@NamedQuery(name = "findByAuthor", query = "SELECT a.authorName, a.id FROM Author a WHERE a.authorName = :name")
 
 @Entity
 @Table(name="Author")
 public class Author {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="AUTHOR_ID")
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="AUTHOR_NAME")
     private String authorName;

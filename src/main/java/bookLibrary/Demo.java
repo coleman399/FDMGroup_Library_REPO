@@ -25,7 +25,7 @@ public class Demo {
 
 	public static List<Book> findAllBooksForAuthor(Author author) {
 		final EntityManager em = emf.createEntityManager();
-		final String jpql = "SELECT b FROM Book b WHERE b.authorName = :author";
+		final String jpql = "SELECT b FROM Book b WHERE b.author LIKE :author";
 		final TypedQuery<Book> query = em.createQuery(jpql, Book.class);
 		query.setParameter("author", author);
 		final List<Book> results = query.getResultList();
@@ -51,6 +51,8 @@ public class Demo {
 		BookItem bookItem1 = new BookItem("blah blah blah", 1234, date1);
 		BookItem bookItem2 = new BookItem("blah blah blah", 1234, date1);
 
+		em = emf.createEntityManager();
+
 		em.getTransaction().begin();
 		rowling.addBookItem(bookItem1);
 		rowling.addBookItem(bookItem2);
@@ -65,6 +67,8 @@ public class Demo {
 		em.close();
 
 		em = emf.createEntityManager();
+		
+		System.out.println("--HERE---"); //debug
 
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);

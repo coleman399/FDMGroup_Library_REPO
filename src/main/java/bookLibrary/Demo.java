@@ -30,6 +30,9 @@ public class Demo {
     em.merge(herbert);
     em.getTransaction().commit();
     em.close();
+
+    System.out.println("--Get Name Test---");
+
     System.out.println(getAuthorName("Frank Herbert"));
     emf.close();
   }

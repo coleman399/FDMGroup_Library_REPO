@@ -9,29 +9,42 @@ import javax.persistence.TypedQuery;
 
 public class Demo {
 
-  static EntityManagerFactory emf;
-  
-  public static List<Author> getAuthorName(String name) {
-    EntityManager em = emf.createEntityManager();    
-    final TypedQuery<Author> query = em.createNamedQuery("findByAuthor", Author.class);
-    query.setParameter("name", name);
-    final List<Author> results = query.getResultList();
-    em.close();
-    return results;
-  }
+	static EntityManagerFactory emf;
 
-  public static void main(String[] args) {
-    Author rowling = new Author("J.K. Rowling");
-    Author herbert = new Author("Frank Herbert");
-    emf = Persistence.createEntityManagerFactory("JPA");
-    EntityManager em = emf.createEntityManager();
-    em.getTransaction().begin();
-    em.merge(rowling);
-    em.merge(herbert);
-    em.getTransaction().commit();
-    em.close();
-    System.out.println(getAuthorName("Frank Herbert"));
-    emf.close();
-  }
+	public static List<Author> getAuthorName(String name) {
+		EntityManager em = emf.createEntityManager();
+		final TypedQuery<Author> query = em.createNamedQuery("findByAuthor", Author.class);
+		query.setParameter("name", name);
+		final List<Author> results = query.getResultList();
+		em.close();
+		return results;
+	}
+
+	public static List<Book> findAllBooksForAuthor(Author author) {
+		final EntityManager em = emf.createEntityManager();
+		final String jpql = "SELECT b FROM Book b WHERE b.authorName = :author";
+		final TypedQuery<Book> query = em.createQuery(jpql, Book.class);
+		query.setParameter("author", author);
+		final List<Book> results = query.getResultList();
+		em.close();
+		return results;
+	}
+
+	public static void main(String[] args) {
+		Author rowling = new Author("J.K. Rowling");
+		Author herbert = new Author("Frank Herbert");
+		emf = Persistence.createEntityManagerFactory("JPA");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.merge(rowling);
+		em.merge(herbert);
+		em.getTransaction().commit();
+		em.close();
+		System.out.println(getAuthorName("Frank Herbert"));
+		emf.close();
+
+		BookItem bookItem = new BookItem();
+
+	}
 
 }

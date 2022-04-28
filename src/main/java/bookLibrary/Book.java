@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQuery(name = "findByBookName", query = "SELECT b FROM Book b WHERE b.bookName LIKE :bookName")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "Book")
@@ -25,7 +27,6 @@ public abstract class Book {
 	private String bookName;
 	@Column(name = "BOOK_ISBN")
 	private int ISBN;
-
 	@Column(name = "BOOK_BORROWED_DATE")
 	private Date borrowedDate;
 

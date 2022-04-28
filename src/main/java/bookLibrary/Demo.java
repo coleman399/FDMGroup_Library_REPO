@@ -33,6 +33,19 @@ public class Demo {
 		return results;
 	}
 
+	public static List<Book> findByBookName(final String bookName) {
+		// Optional<Book> foundBook = Optional.empty();
+		final EntityManager em = emf.createEntityManager();
+		final TypedQuery<Book> query = em.createNamedQuery("findByBookName", Book.class);
+		query.setParameter("bookName", bookName);
+		final List<Book> results = query.getResultList();
+		// if (!results.isEmpty()) {
+		// 	foundBook = Optional.of(results.get(0));
+		// }
+		em.close();
+		return results;
+	}
+
 	public static void main(String[] args) throws ParseException {
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
@@ -53,6 +66,7 @@ public class Demo {
 
 		em = emf.createEntityManager();
 
+
 		em.getTransaction().begin();
 		rowling.addBookItem(bookItem1);
 		rowling.addBookItem(bookItem2);
@@ -66,9 +80,15 @@ public class Demo {
 
 		em.close();
 
+		em = emf.createEntityManager();
+
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);
 
+		final List<Book> searchByBookResults = findByBookName("blah blah blah");
+		System.out.println(searchByBookResults);
+
+		em.close();
 		emf.close();
 	}
 

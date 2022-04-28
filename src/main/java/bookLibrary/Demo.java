@@ -93,32 +93,48 @@ public class Demo {
 
 		em.close();
 
+
+    /****************************************************************************
+     *                                                                           *
+     * Create/save a Patron      																								 *
+     * Borrow a book and save everything																				 *
+     *                                                                           *
+     ****************************************************************************/
+
 		Patron patronOne = new Patron("Billy", "123 Main Street");
-		// Patron patronTwo = new Patron("Sarah", "456 East Sycamore");
+		Patron patronTwo = new Patron("Sarah", "456 East Sycamore");
+		BookItem bookItemOne = new BookItem("blah blah blah", 1234, date1);
+		BookItem bookItemTwo = new BookItem("bleh bleh bleh", 5678, date1);
+		BookItem bookItemThree = new BookItem("grable grable grable", 0000, date1);
+		BookItem bookItemFour = new BookItem("greble greble greble", 1111, date1);
 
 		em = emf.createEntityManager();
 
 		em.getTransaction().begin();
 
-		bookItem1 = em.merge(bookItem1);
-		bookItem2 = em.merge(bookItem2);
-		patronOne.borrowBook(bookItem1);
-		patronOne.borrowBook(bookItem2);
+		bookItemOne = em.merge(bookItemOne);
+		bookItemTwo = em.merge(bookItemTwo);
+		bookItemThree = em.merge(bookItemThree);
+		bookItemFour = em.merge(bookItemFour);
+		patronOne.borrowBook(bookItemOne);
+		patronOne.borrowBook(bookItemTwo);
+		patronTwo.borrowBook(bookItemThree);
+		patronTwo.borrowBook(bookItemFour);
 		patronOne = em.merge(patronOne);
-		bookItem1 = patronOne.getBooks().get(0);
-		bookItem1.setPatron(patronOne);
+		patronTwo = em.merge(patronTwo);
+
 		em.getTransaction().commit();
 
 		em.close();
 
 		em = emf.createEntityManager();
-		// final List<Book> results = findAllBooksForAuthor(rowling);
-		// System.out.println(results);
+		final List<Book> results = findAllBooksForAuthor(rowling);
+		System.out.println(results);
 
-		// final List<Book> searchByBookResults = findByBookName("blah blah blah");
-		// System.out.println(searchByBookResults);
+		final List<Book> searchByBookResults = findByBookName("blah blah blah");
+		System.out.println(searchByBookResults);
 
-		final List<Book> borrowedBookList = borrowedBookList("Billy");
+		final List<Book> borrowedBookList = borrowedBookList("Sarah");
 		System.out.println(borrowedBookList);
 		em.close();
 

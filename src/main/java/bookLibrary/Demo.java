@@ -14,6 +14,15 @@ public class Demo {
 
 	static EntityManagerFactory emf;
 
+	public static List<Library> findAllBooksInLibrary() {
+		final EntityManager em = emf.createEntityManager();
+		final String jpql = "SELECT l FROM Library l";
+		final TypedQuery<Library> query = em.createQuery(jpql, Library.class);
+		final List<Library> results = query.getResultList();
+		em.close();
+		return results;
+	}
+
 	public static List<Author> getAuthorName(String name) {
 		EntityManager em = emf.createEntityManager();
 		final TypedQuery<Author> query = em.createNamedQuery("findByAuthor", Author.class);
@@ -40,7 +49,7 @@ public class Demo {
 		query.setParameter("bookName", bookName);
 		final List<Book> results = query.getResultList();
 		// if (!results.isEmpty()) {
-		// 	foundBook = Optional.of(results.get(0));
+		// foundBook = Optional.of(results.get(0));
 		// }
 		em.close();
 		return results;
@@ -65,8 +74,6 @@ public class Demo {
 		BookItem bookItem2 = new BookItem("blah blah blah", 1234, date1);
 
 		em = emf.createEntityManager();
-
-
 		em.getTransaction().begin();
 		rowling.addBookItem(bookItem1);
 		rowling.addBookItem(bookItem2);
@@ -75,20 +82,32 @@ public class Demo {
 		bookItem1.setAuthor(rowling);
 		bookItem2 = rowling.getBooks().get(1);
 		bookItem2.setAuthor(rowling);
-
 		em.getTransaction().commit();
-
 		em.close();
 
 		em = emf.createEntityManager();
-
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);
 
 		final List<Book> searchByBookResults = findByBookName("blah blah blah");
 		System.out.println(searchByBookResults);
-
 		em.close();
+
+		// ----Library-----
+
+		Library library = new Library(1, "USA Library", "USA-1");
+		em = emf.createEntityManager();
+		em.getTransaction().begin();
+		library.addBookItem(bookItem1);
+		library.addBookItem(bookItem2);
+		em.merge(library);
+		bookItem1 = library.getBooks().get(0);
+		bookItem1.setLibrary(library);
+		em.getTransaction().commit();
+		em.close();
+		System.out.println("-----Library------");
+		System.out.println(findAllBooksInLibrary());
+
 		emf.close();
 	}
 

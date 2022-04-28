@@ -14,7 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@NamedQuery(name = "borrowBookQuery", query = "SELECT p.borrowedBooks FROM Patron p WHERE p.patronName LIKE :patronName")
+@NamedQuery(name = "borrowBookQuery", query = "SELECT b FROM Patron p JOIN p.borrowedBooks b WHERE p.patronName LIKE :patronName")
 
 @Entity
 @Table(name = "Patron")

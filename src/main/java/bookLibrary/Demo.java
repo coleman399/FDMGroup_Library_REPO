@@ -2,7 +2,6 @@ package bookLibrary;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,11 +46,11 @@ public class Demo {
 		return results;
 	}
 
-	public static List<Collection> borrowedBookList(String patronName) {
+	public static List<Book> borrowedBookList(String patronName) {
 		final EntityManager em = emf.createEntityManager();
-		final TypedQuery<Collection> query = em.createNamedQuery("borrowBookQuery", Collection.class);
+		final TypedQuery<Book> query = em.createNamedQuery("borrowBookQuery", Book.class);
 		query.setParameter("patronName", patronName);
-		final List<Collection> results = query.getResultList();
+		final List<Book> results = query.getResultList();
 		em.close();
 		return results;
 	}
@@ -119,7 +118,7 @@ public class Demo {
 		// final List<Book> searchByBookResults = findByBookName("blah blah blah");
 		// System.out.println(searchByBookResults);
 
-		final List<Collection> borrowedBookList = borrowedBookList("Billy");
+		final List<Book> borrowedBookList = borrowedBookList("Billy");
 		System.out.println(borrowedBookList);
 		em.close();
 

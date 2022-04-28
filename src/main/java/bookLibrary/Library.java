@@ -1,35 +1,69 @@
 package bookLibrary;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Libarary")
 public class Library {
+	@Id
+	@Column(name = "LIBRARY_ID")
+	private int libraryId;
+	@Column(name = "LIBRARY_NAME")
+	private String libraryName;
+	@Column(name = "LIBRARY_ADDRESS")
+	private String libraryAddress;
 
-    private String libraryName;
-    private String libraryAddress;
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	private List<BookItem> books = new ArrayList<>();
 
-    public Library(String libraryName, String libraryAddress) {
-        super();
-        this.libraryName = libraryName;
-        this.libraryAddress = libraryAddress;
-    }
+	public Library() {
+		super();
+	}
 
-    public String getLibraryName() {
-        return libraryName;
-    }
+	public Library(int libraryId, String libraryName, String libraryAddress) {
+		super();
+		this.libraryId = libraryId;
+		this.libraryName = libraryName;
+		this.libraryAddress = libraryAddress;
+	}
 
-    public void setLibraryName(String libraryName) {
-        this.libraryName = libraryName;
-    }
+	public String getLibraryName() {
+		return libraryName;
+	}
 
-    public String getLibraryAddress() {
-        return libraryAddress;
-    }
+	public void setLibraryName(String libraryName) {
+		this.libraryName = libraryName;
+	}
 
-    public void setLibraryAddress(String libraryAddress) {
-        this.libraryAddress = libraryAddress;
-    }
+	public String getLibraryAddress() {
+		return libraryAddress;
+	}
 
-    @Override
-    public String toString() {
-        return "Library [libraryName=" + libraryName + ", libraryAddress=" + libraryAddress + "]";
-    }
-    
+	public void setLibraryAddress(String libraryAddress) {
+		this.libraryAddress = libraryAddress;
+	}
+
+	@Override
+	public String toString() {
+		return "Library [libraryId=" + libraryId + ", libraryName=" + libraryName + ", libraryAddress=" + libraryAddress
+				+ ", books=" + books + "]";
+	}
+
+	public List<BookItem> getBooks() {
+		return books;
+	}
+
+	public void addBookItem(BookItem bookItem1) {
+		books.add(bookItem1);
+
+	}
+
 }

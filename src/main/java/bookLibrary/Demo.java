@@ -75,6 +75,7 @@ public class Demo {
 
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
+
 		rowling.addBookItem(bookItem1);
 		rowling.addBookItem(bookItem2);
 		rowling = em.merge(rowling);
@@ -92,8 +93,6 @@ public class Demo {
 		final List<Book> searchByBookResults = findByBookName("blah blah blah");
 		System.out.println(searchByBookResults);
 		em.close();
-
-		// ----Library-----
 
 		Library library = new Library(1, "USA Library", "USA-1");
 		em = emf.createEntityManager();

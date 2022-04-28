@@ -21,7 +21,7 @@ public class Library {
 	@Column(name = "LIBRARY_ADDRESS")
 	private String libraryAddress;
 
-	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<BookItem> books = new ArrayList<>();
 
 	public Library() {
@@ -50,6 +50,15 @@ public class Library {
 	public void setLibraryAddress(String libraryAddress) {
 		this.libraryAddress = libraryAddress;
 	}
+
+	public void removeFromLibrary(BookItem book) {
+		for (BookItem bookItem : books) {
+			if (bookItem == book && bookItem.isBorrowed() == true) {
+				books.remove(book);
+			}
+		}
+	}
+
 
 	@Override
 	public String toString() {

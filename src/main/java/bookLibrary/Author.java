@@ -25,7 +25,7 @@ public class Author {
 	@Column(name = "AUTHOR_NAME")
 	private String authorName;
 
-	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, orphanRemoval = true)
 	private List<BookItem> books = new ArrayList<>();
 
 	public Author(final String authorName) {

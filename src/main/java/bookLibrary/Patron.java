@@ -30,7 +30,7 @@ public class Patron {
 	@Column(name = "PATRON_ADDRESS")
 	private String patronAddress;
 
-	@OneToMany (cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany (cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, orphanRemoval = true)
 	@JoinColumn(name = "FK_BOOK_NO")
 	private List<BookItem> borrowedBooks = new ArrayList<>();
 
@@ -60,6 +60,7 @@ public class Patron {
 
 	public void borrowBook(BookItem book) {
 		borrowedBooks.add(book);
+		book.isBorrowed();
 	}
 
 	public List<BookItem> getBooks() {

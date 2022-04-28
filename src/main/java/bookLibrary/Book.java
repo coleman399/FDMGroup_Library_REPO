@@ -29,6 +29,8 @@ public abstract class Book {
 	private int ISBN;
 	@Column(name = "BOOK_BORROWED_DATE")
 	private Date borrowedDate;
+	@Column(name = "BORROWED_BOOK")
+	private boolean borrowed = false;
 
 	@ManyToOne
 	private Author author;
@@ -61,6 +63,14 @@ public abstract class Book {
 
 	public Author getAuthor() {
 		return author;
+	}
+
+	public boolean isBorrowed() {
+		return !borrowed;
+	}
+
+	public void setBorrowed(boolean borrowed) {
+		this.borrowed = borrowed;
 	}
 
 	public void setAuthor(Author author) {

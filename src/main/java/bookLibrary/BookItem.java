@@ -2,6 +2,7 @@ package bookLibrary;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -11,7 +12,7 @@ public class BookItem extends Book {
 	@ManyToOne
 	private Patron patron;
 
-	@ManyToOne
+	@ManyToOne (cascade = { CascadeType.ALL})
 	private Library library;
 
 	public BookItem(String bookName, int iSBN, Date borrowedDate) {

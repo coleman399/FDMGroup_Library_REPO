@@ -64,6 +64,26 @@ public class Demo {
 		return results;
 	}
 
+	public static void getListOfBooksToDeleted(String bookName, Library library) {
+		final EntityManager em = emf.createEntityManager();
+		final TypedQuery<Book> query = em.createNamedQuery("findByBookName", Book.class);
+		query.setParameter("bookName", bookName);
+		final List<Book> results = query.getResultList();
+		em.getTransaction().begin();
+		for (Book book : results) {
+			for (Book libBook: library.getBooks()) {
+				if (libBook.getBookName().equals(book.getBookName()) && libBook.getBookName().equals(bookName)) {
+					em.remove(em.merge(libBook));
+				}
+			}
+			if (book.getBookName().equals(bookName)) {
+				em.remove(em.merge(book));
+			}
+		}
+		em.getTransaction().commit();
+		em.close();
+	}
+
 	public static void main(String[] args) throws ParseException {
 
 		Author rowling = new Author("J.K. Rowling");
@@ -73,7 +93,7 @@ public class Demo {
 
 		String sDate1 = "31/12/1998";
 		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-		
+
 		BookItem bookItemOne = new BookItem("book one", 1234, date1);
 		BookItem bookItemTwo = new BookItem("book two", 5678, date1);
 		BookItem bookItemThree = new BookItem("book three", 0000, date1);
@@ -92,7 +112,7 @@ public class Demo {
 		em = emf.createEntityManager();
 
 		em.getTransaction().begin();
-		
+
 		rowling.addBookItem(bookItemOne);
 		herbert.addBookItem(bookItemTwo);
 		authorThree.addBookItem(bookItemThree);
@@ -115,12 +135,12 @@ public class Demo {
 		em.getTransaction().commit();
 		em.close();
 
-    /****************************************************************************
-     *                                                                           *
-     * Create/save a Patron      																								 *
-     * Borrow a book and save everything																				 *
-     *                                                                           *
-     ****************************************************************************/
+		/****************************************************************************
+		 * *
+		 * Create/save a Patron *
+		 * Borrow a book and save everything *
+		 * *
+		 ****************************************************************************/
 
 		Patron patronOne = new Patron("Billy", "123 Main Street");
 		Patron patronTwo = new Patron("Sarah", "456 East Sycamore");
@@ -151,19 +171,19 @@ public class Demo {
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);
 
-		System.out.println("-----Search Books By Name------"); // add bollean for status of checked out or not
+		System.out.println("-----Search Books By Name------"); // add boolean for status of checked out or not
 		final List<Book> searchByBookResults = findByBookName("book one");
 		System.out.println(searchByBookResults);
 		em.close();
-    
+
 		System.out.println("-----Patron Borrowed Book List------");
-    final List<Book> borrowedBookList = borrowedBookList("Sarah");
+		final List<Book> borrowedBookList = borrowedBookList("Sarah");
 		System.out.println(borrowedBookList);
 		em.close();
 
 		// ----Library-----
 
-    Library library = new Library(1, "USA Library", "USA-1");
+		Library library = new Library(1, "USA Library", "USA-1");
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		library.addBookItem(bookItemOne);
@@ -173,19 +193,15 @@ public class Demo {
 
 		em.merge(library);
 
-		bookItemOne = library.getBooks().get(0);
-		bookItemOne.setLibrary(library);
-		bookItemTwo = library.getBooks().get(0);
-		bookItemTwo.setLibrary(library);
-		bookItemThree = library.getBooks().get(0);
-		bookItemThree.setLibrary(library);
-		bookItemFour = library.getBooks().get(0);
-		bookItemFour.setLibrary(library);
-
 		em.getTransaction().commit();
 		em.close();
 
 		System.out.println("-----Library------");
+		System.out.println(findAllBooksInLibrary());
+
+		getListOfBooksToDeleted(bookItemTwo.getBookName(), library);
+
+		System.out.println("----- Updated Library ------");
 		System.out.println(findAllBooksInLibrary());
 
 		emf.close();

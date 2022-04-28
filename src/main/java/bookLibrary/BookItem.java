@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 public class BookItem extends Book {
 
 	@ManyToOne
+	private Patron patron;
 	private Library library;
 
 	public BookItem(String bookName, int iSBN, Date borrowedDate) {
@@ -23,7 +24,11 @@ public class BookItem extends Book {
 
 	}
 
-	public void setLibrary(Library library) {
+  public void setPatron(Patron patronOne) {
+		this.patron = patronOne;
+  }
+
+  public void setLibrary(Library library) {
 		this.library = library;
 
 	}

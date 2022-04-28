@@ -55,16 +55,29 @@ public class Demo {
 		return results;
 	}
 
+	public static List<Book> borrowedBookList(String patronName) {
+		final EntityManager em = emf.createEntityManager();
+		final TypedQuery<Book> query = em.createNamedQuery("borrowBookQuery", Book.class);
+		query.setParameter("patronName", patronName);
+		final List<Book> results = query.getResultList();
+		em.close();
+		return results;
+	}
+
 	public static void main(String[] args) throws ParseException {
+
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
+
 		emf = Persistence.createEntityManagerFactory("JPA");
+
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(rowling);
 		em.merge(herbert);
 		em.getTransaction().commit();
 		em.close();
+
 		System.out.println(getAuthorName("Frank Herbert"));
 
 		String sDate1 = "31/12/1998";
@@ -74,7 +87,9 @@ public class Demo {
 		BookItem bookItem2 = new BookItem("blah blah blah", 1234, date1);
 
 		em = emf.createEntityManager();
+
 		em.getTransaction().begin();
+		
 		rowling.addBookItem(bookItem1);
 		rowling.addBookItem(bookItem2);
 		rowling = em.merge(rowling);
@@ -85,17 +100,56 @@ public class Demo {
 		em.getTransaction().commit();
 		em.close();
 
+
+    /****************************************************************************
+     *                                                                           *
+     * Create/save a Patron      																								 *
+     * Borrow a book and save everything																				 *
+     *                                                                           *
+     ****************************************************************************/
+
+		Patron patronOne = new Patron("Billy", "123 Main Street");
+		Patron patronTwo = new Patron("Sarah", "456 East Sycamore");
+		BookItem bookItemOne = new BookItem("blah blah blah", 1234, date1);
+		BookItem bookItemTwo = new BookItem("bleh bleh bleh", 5678, date1);
+		BookItem bookItemThree = new BookItem("grable grable grable", 0000, date1);
+		BookItem bookItemFour = new BookItem("greble greble greble", 1111, date1);
+
 		em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+
+		bookItemOne = em.merge(bookItemOne);
+		bookItemTwo = em.merge(bookItemTwo);
+		bookItemThree = em.merge(bookItemThree);
+		bookItemFour = em.merge(bookItemFour);
+		patronOne.borrowBook(bookItemOne);
+		patronOne.borrowBook(bookItemTwo);
+		patronTwo.borrowBook(bookItemThree);
+		patronTwo.borrowBook(bookItemFour);
+		patronOne = em.merge(patronOne);
+		patronTwo = em.merge(patronTwo);
+
+		em.getTransaction().commit();
+
+		em.close();
+
+		em = emf.createEntityManager();
+
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);
 
 		final List<Book> searchByBookResults = findByBookName("blah blah blah");
 		System.out.println(searchByBookResults);
 		em.close();
+    
+    final List<Book> borrowedBookList = borrowedBookList("Sarah");
+		System.out.println(borrowedBookList);
+		em.close();
 
 		// ----Library-----
 
-		Library library = new Library(1, "USA Library", "USA-1");
+    Library library = new Library(1, "USA Library", "USA-1");
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		library.addBookItem(bookItem1);

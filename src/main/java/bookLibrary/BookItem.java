@@ -10,6 +10,8 @@ public class BookItem extends Book {
 
 	@ManyToOne
 	private Patron patron;
+
+	@ManyToOne
 	private Library library;
 
 	public BookItem(String bookName, int iSBN, Date borrowedDate) {

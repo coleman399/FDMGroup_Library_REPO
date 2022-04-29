@@ -12,7 +12,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
+// We wrote this together <3
 @NamedQuery(name = "findByBookName", query = "SELECT b FROM Book b WHERE b.bookName LIKE :bookName")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity

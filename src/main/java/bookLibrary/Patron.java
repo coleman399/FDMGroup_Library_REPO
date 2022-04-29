@@ -14,8 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+// Tucker <3
 @NamedQuery(name = "borrowBookQuery", query = "SELECT b FROM Patron p JOIN p.borrowedBooks b WHERE p.patronName LIKE :patronName")
-
 @Entity
 @Table(name = "Patron")
 public class Patron {
@@ -30,7 +30,7 @@ public class Patron {
 	@Column(name = "PATRON_ADDRESS")
 	private String patronAddress;
 
-	@OneToMany (cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, orphanRemoval = true)
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, orphanRemoval = true)
 	@JoinColumn(name = "FK_BOOK_NO")
 	private List<BookItem> borrowedBooks = new ArrayList<>();
 
@@ -68,8 +68,8 @@ public class Patron {
 	}
 
 	@Override
-  public String toString() {
-    return "Patron [borrowedBooks=" + borrowedBooks + ", id=" + id + ", patronAddress=" + patronAddress
-        + ", patronName=" + patronName + "]";
-  }
+	public String toString() {
+		return "Patron [borrowedBooks=" + borrowedBooks + ", id=" + id + ", patronAddress=" + patronAddress
+				+ ", patronName=" + patronName + "]";
+	}
 }

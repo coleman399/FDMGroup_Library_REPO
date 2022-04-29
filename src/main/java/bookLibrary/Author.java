@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @NamedQuery(name = "findByAuthor", query = "SELECT a FROM Author a WHERE a.authorName = :name")
-
 @Entity
 @Table(name = "Author")
 public class Author {
@@ -48,9 +47,9 @@ public class Author {
 		return "Author [authorName=" + authorName + ", id=" + id + "]";
 	}
 
-    public void addBookItem(BookItem bookItem) {
+	public void addBookItem(BookItem bookItem) {
 		books.add(bookItem);
-    }
+	}
 
 	public List<BookItem> getBooks() {
 		return books;

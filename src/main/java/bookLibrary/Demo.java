@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-
+// Sri's contribution 
 public class Demo {
 
 	static EntityManagerFactory emf;
@@ -43,14 +43,10 @@ public class Demo {
 	}
 
 	public static List<Book> findByBookName(final String bookName) {
-		// Optional<Book> foundBook = Optional.empty();
 		final EntityManager em = emf.createEntityManager();
 		final TypedQuery<Book> query = em.createNamedQuery("findByBookName", Book.class);
 		query.setParameter("bookName", bookName);
 		final List<Book> results = query.getResultList();
-		// if (!results.isEmpty()) {
-		// foundBook = Optional.of(results.get(0));
-		// }
 		em.close();
 		return results;
 	}
@@ -64,6 +60,8 @@ public class Demo {
 		return results;
 	}
 
+	// tired to implement this delete function but we were unsuccessful
+	// TRASH
 	public static void getListOfBooksToDeleted(String bookName, Library library) {
 		final EntityManager em = emf.createEntityManager();
 		final TypedQuery<Book> query = em.createNamedQuery("findByBookName", Book.class);
@@ -71,29 +69,38 @@ public class Demo {
 		final List<Book> results = query.getResultList();
 		em.getTransaction().begin();
 		for (Book book : results) {
-			for (Book libBook: library.getBooks()) {
+			for (Book libBook : library.getBooks()) {
 				if (libBook.getBookName().equals(book.getBookName()) && libBook.getBookName().equals(bookName)) {
 					em.remove(em.merge(libBook));
 				}
 			}
-			if (book.getBookName().equals(bookName)) {
-				em.remove(em.merge(book));
-			}
 		}
 		em.getTransaction().commit();
 		em.close();
+
+		// This is basically what we are doing
+		// final EntityManager em = emf.createEntityManager();
+		// em.getTransaction().begin();
+		// em.remove(em.merge(bookItem));
+		// em.close();
+		// em.getTransaction().commit();
+		// em.close();
+
 	}
 
 	public static void main(String[] args) throws ParseException {
-
+		
+		// create authors
 		Author rowling = new Author("J.K. Rowling");
 		Author herbert = new Author("Frank Herbert");
 		Author authorThree = new Author("abc");
 		Author authorFour = new Author("123");
 
+		// create dates
 		String sDate1 = "31/12/1998";
 		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
 
+		// create books
 		BookItem bookItemOne = new BookItem("book one", 1234, date1);
 		BookItem bookItemTwo = new BookItem("book two", 5678, date1);
 		BookItem bookItemThree = new BookItem("book three", 0000, date1);
@@ -112,17 +119,20 @@ public class Demo {
 		em = emf.createEntityManager();
 
 		em.getTransaction().begin();
-
+		
+		// add books to author
 		rowling.addBookItem(bookItemOne);
 		herbert.addBookItem(bookItemTwo);
 		authorThree.addBookItem(bookItemThree);
 		authorFour.addBookItem(bookItemFour);
 
+		// merge authors
 		herbert = em.merge(herbert);
 		authorThree = em.merge(authorThree);
 		authorFour = em.merge(authorFour);
 		rowling = em.merge(rowling);
 
+		// set authors to books
 		bookItemOne = rowling.getBooks().get(0);
 		bookItemOne.setAuthor(rowling);
 		bookItemTwo = herbert.getBooks().get(0);
@@ -141,7 +151,7 @@ public class Demo {
 		 * Borrow a book and save everything *
 		 * *
 		 ****************************************************************************/
-
+		// add patrons
 		Patron patronOne = new Patron("Billy", "123 Main Street");
 		Patron patronTwo = new Patron("Sarah", "456 East Sycamore");
 
@@ -149,6 +159,7 @@ public class Demo {
 
 		em.getTransaction().begin();
 
+		// merge books
 		bookItemOne = em.merge(bookItemOne);
 		bookItemTwo = em.merge(bookItemTwo);
 		bookItemThree = em.merge(bookItemThree);
@@ -164,24 +175,31 @@ public class Demo {
 
 		em = emf.createEntityManager();
 
-		System.out.println("-----Get Author Name------");
+		// tell us what is happening
+
+		System.out.println(
+				"--------------------------------------------Get Author Name----------------------------------------------------------------");
 		System.out.println(getAuthorName("Frank Herbert"));
 
-		System.out.println("-----Search Books By Author------");
+		System.out.println(
+				"-----------------------------------------------Search Books By Author---------------------------------------------------");
 		final List<Book> results = findAllBooksForAuthor(rowling);
 		System.out.println(results);
 
-		System.out.println("-----Search Books By Name------"); // add boolean for status of checked out or not
+		System.out.println(
+				"-----------------------------------------------------------------------Search Books By Name---------------------------------------------------------------------"); // not
 		final List<Book> searchByBookResults = findByBookName("book one");
 		System.out.println(searchByBookResults);
 		em.close();
 
-		System.out.println("-----Patron Borrowed Book List------");
+		System.out.println(
+				"----------------------------------------------------Patron Borrowed Book List-------------------------------------------------");
 		final List<Book> borrowedBookList = borrowedBookList("Sarah");
 		System.out.println(borrowedBookList);
 		em.close();
 
-		// ----Library-----
+		// -----Library-----
+		// add items to library
 
 		Library library = new Library(1, "USA Library", "USA-1");
 		em = emf.createEntityManager();
@@ -196,13 +214,13 @@ public class Demo {
 		em.getTransaction().commit();
 		em.close();
 
-		System.out.println("-----Library------");
+		// spit out all books in library
+
+		System.out.println(
+				"-------------------------------------------Library---------------------------------------------------------");
 		System.out.println(findAllBooksInLibrary());
 
-		getListOfBooksToDeleted(bookItemTwo.getBookName(), library);
-
-		System.out.println("----- Updated Library ------");
-		System.out.println(findAllBooksInLibrary());
+		// getListOfBooksToDeleted(bookItemTwo.getBookName(), library);
 
 		emf.close();
 	}

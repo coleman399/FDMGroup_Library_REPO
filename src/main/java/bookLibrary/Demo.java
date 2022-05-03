@@ -135,11 +135,11 @@ public class Demo {
 		// set authors to books
 		bookItemOne = rowling.getBooks().get(0);
 		bookItemOne.setAuthor(rowling);
-		bookItemTwo = herbert.getBooks().get(0);
+		bookItemTwo = herbert.getBooks().get(1);
 		bookItemTwo.setAuthor(herbert);
-		bookItemThree = authorThree.getBooks().get(0);
+		bookItemThree = authorThree.getBooks().get(2);
 		bookItemThree.setAuthor(authorThree);
-		bookItemFour = authorFour.getBooks().get(0);
+		bookItemFour = authorFour.getBooks().get(3);
 		bookItemFour.setAuthor(authorFour);
 
 		em.getTransaction().commit();
